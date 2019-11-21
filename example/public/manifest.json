@@ -1,0 +1,8 @@
+{
+  "short_name": "k-pagination-list",
+  "name": "k-pagination-list",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
