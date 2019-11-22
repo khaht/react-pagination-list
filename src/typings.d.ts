@@ -2,7 +2,7 @@
  * Default CSS definition for typescript,
  * will be overridden with file-specific definitions by rollup
  */
-declare module '*.css' {
+declare module '*.scss' {
   const content: { [className: string]: string };
   export default content;
 }
@@ -14,4 +14,9 @@ declare module '*.svg' {
   const svgComponent: SvgrComponent;
   export default svgUrl;
   export { svgComponent as ReactComponent }
+}
+declare module "k-pagination" {
+  export interface HTMLLIElement<T> {
+    "aria-disabled"?: boolean
+  }
 }

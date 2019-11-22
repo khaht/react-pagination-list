@@ -1,31 +1,105 @@
-# k-pagination-list
+# react-pagination-list
+React component show the list with paging support
 
-> module reactjs
+### Install
 
-[![NPM](https://img.shields.io/npm/v/k-pagination-list.svg)](https://www.npmjs.com/package/k-pagination-list) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+Through npm
+`npm install react-pagination-list --save`
 
-## Install
+### Required
 
-```bash
-npm install --save k-pagination-list
+- node >= 8.
+
+- npm >= 6.
+
+- react, react-dom >= 16.8.0.
+
+### Usage
+ES6
+```js
+import PaginationList from 'react-pagination-list';
 ```
 
-## Usage
+ES5
+```js
+const PaginationList = require('react-pagination-list');
+```
 
-```tsx
-import * as React from 'react'
+Typescript
+```js
+import * as PaginationList from 'react-pagination-list';
+```
 
-import MyComponent from 'k-pagination-list'
 
-class Example extends React.Component {
-  render () {
+### Props
+
+#### data
+
+data is a plain array
+
+| TYPE | REQUIRED | DEFAULT |
+|-------------|-------------|-------|
+| array| yes | [] |
+
+#### pageSize
+
+Config of page size, hide it by setting it to **undefined**
+
+```jsx
+  pageSize={number} 
+```
+
+| TYPE | REQUIRED | DEFAULT |
+|-------------|-------------|-------|
+| number | no | undefined |
+
+#### renderItem
+
+Takes an item from **data** and renders it into the list.
+
+```jsx
+  renderItem(item, key);
+```
+
+| TYPE | REQUIRED | DEFAULT |
+|-------------|-------------|-------|
+| Function | yes | undefined |
+
+- item (Object): The item from **data** being rendered.
+- key (number): The index corresponding to this item in the **data** array.
+
+### Examples
+```jsx
+import React, { Component } from 'react';
+import PaginationList from 'react-pagination-list';
+
+export default class MyComponent extends Component {
+  state = {
+    data: [
+      {
+        id: 1,
+        name: "Johnson"
+      },
+      {
+        id: 2,
+        name: "David"
+      },
+      {
+        id: 3,
+        name: "Alice"
+      }
+    ]
+  }
+  render(){
     return (
-      <MyComponent />
+      <PaginationList 
+        data={this.state.data}
+        pageSize={2}
+        renderItem={(item, key) => (
+          <p key={key}>{item.name}</p>
+        )}
+      >
     )
   }
 }
 ```
-
-## License
-
-MIT © [huynhkha8295@gmail.com](https://github.com/huynhkha8295@gmail.com)

@@ -1,13 +1,41 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-import ExampleComponent from 'k-pagination-list'
+import Pagination from 'k-pagination-list'
 
-export default class App extends Component {
-  render () {
-    return (
-      <div>
-        <ExampleComponent text='Modern React component module' />
+const App = () => {
+  return (
+    <div>
+        <Pagination 
+          data={[
+            {
+              id: 1,
+              title: "abc"
+            },
+            {
+              id: 2,
+              title: "def"
+            },
+            {
+              id: 3,
+              title: "fdsfsd"
+            },
+            {
+              id: 1,
+              title: "abc"
+            },
+            {
+              id: 2,
+              title: "def"
+            },
+            {
+              id: 3,
+              title: "fdsfsd"
+            }
+          ]}
+          pageSize={2}
+          renderItem={(item, key) => <p key={key}>{item.title}</p>}
+        />
       </div>
-    )
-  }
+  )
 }
+export default App;

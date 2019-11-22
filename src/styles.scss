@@ -1,0 +1,75 @@
+.kPagination {
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  .kPaginationListPage {
+    padding-left: 0;
+    margin: 5px 0;
+    li {
+      float: left;
+      list-style: none;
+      margin: 0 4px;
+      cursor: pointer;
+    }
+    .kPaginationActive {
+      color: #2196f3;
+      border-color: #2196f3 !important;
+    }
+    .kPaginationJumpNext,
+    .kPaginationJumpPrev {
+      border: 0 !important;
+      font-size: 12px;
+      i {
+        opacity: 0;
+        position: absolute;
+        transition: all 200ms ease;
+      }
+      a {
+        opacity: 1;
+        position: absolute;
+        transition: all 200ms ease;
+      }
+      &:hover {
+        i {
+          opacity: 1;
+        }
+        a {
+          opacity: 0;
+        }
+      }
+    }
+    .kPaginationPrev,
+    .kPaginationNext,
+    .kPaginationItem {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 32px;
+      height: 32px;
+      text-align: center;
+      list-style: none;
+      background-color: #fff;
+      border: 1px solid #d9d9d9;
+      border-radius: 4px;
+      outline: 0;
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      &:hover {
+        color: #2196f3;
+        border-color: #2196f3 !important;
+      }
+    }
+    .kPrevDisabled,
+    .kNextDisabled {
+      cursor: not-allowed;
+      color: #e8e6e6;
+    }
+    .kiconLeft,
+    .kiconRight {
+      font-size: 12px;
+    }
+  }
+}
