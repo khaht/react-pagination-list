@@ -2,10 +2,16 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import styles from "./styles.scss";
 
+export interface OnPageChangeProps {
+  page: number
+  totalPage: number
+}
+
 interface Props {
   data: Array<any>;
   pageSize: number;
   renderItem: Function;
+  onPageChange: ({ page }: OnPageChangeProps) => any;
 }
 
 interface DataPaginate {
@@ -16,6 +22,7 @@ interface DataPaginate {
   prePage: number;
   pageCurrent: number;
 }
+
 let countJump = 1;
 const Main: React.FC<Props> = React.memo(props => {
   const { data, pageSize }: Props = props,
@@ -29,15 +36,15 @@ const Main: React.FC<Props> = React.memo(props => {
   React.useEffect(() => {
     const { arrayList, totalPage, pageCurrent } = handlePaginate(
       data,
-      1,
+      currentPage,
       pageSize ? pageSize : 0
     );
     totalPage > 5
       ? setArrItemPage([...Array.from(Array(5).keys())])
       : setArrItemPage([...Array.from(Array(totalPage).keys())]);
-    setArrayList(arrayList);
-    setTotalPage(totalPage);
-    setCurrentPage(pageCurrent);
+      setArrayList(arrayList);
+      setTotalPage(totalPage);
+      setCurrentPage(pageCurrent);
   }, [pageSize, data]);
 
   const handlePaginate = (
@@ -95,8 +102,8 @@ const Main: React.FC<Props> = React.memo(props => {
   };
   const setThemeItemSelected = (selectedPage: number | string | null): void => {
     const liesNode: NodeListOf<HTMLLIElement> = document.querySelectorAll(
-        ".k-pagination-item"
-      ),
+      ".k-pagination-item"
+    ),
       lies: HTMLLIElement[] = Array.from(liesNode);
     for (const li of lies) {
       li.classList.remove(styles.kPaginationActive);
@@ -111,6 +118,9 @@ const Main: React.FC<Props> = React.memo(props => {
 
   const _onChangePage = (page: number, type?: string): void => {
     const { arrayList } = handlePaginate(data, page, pageSize ? pageSize : 0);
+
+    props.onPageChange && props.onPageChange({ page, totalPage })
+
     setCurrentPage(page);
     setArrayList(arrayList);
     setThemeItemSelected(page);
@@ -137,9 +147,8 @@ const Main: React.FC<Props> = React.memo(props => {
           key={firstPage}
           title={`${firstPage}`}
           onClick={() => _onChangePage(firstPage, "first")}
-          className={`${styles.kPaginationItem} ${
-            currentPage === 1 ? styles.kPaginationActive : ""
-          }`}
+          className={`${styles.kPaginationItem} ${currentPage === 1 ? styles.kPaginationActive : ""
+            }`}
         >
           {firstPage}
         </li>
@@ -240,9 +249,8 @@ const Main: React.FC<Props> = React.memo(props => {
       return (
         <li
           title={`${pagePos}`}
-          className={`${styles.kPaginationItem} ${
-            currentPage === pagePos ? styles.kPaginationActive : ""
-          }`}
+          className={`${styles.kPaginationItem} ${currentPage === pagePos ? styles.kPaginationActive : ""
+            }`}
           onClick={() => _onChangePage(pagePos)}
           key={pagePos}
         >
@@ -276,7 +284,7 @@ const Main: React.FC<Props> = React.memo(props => {
 
   const _onPrevPage = (): void => {
     if (currentPage !== 1) {
-      setCurrentPage(--currentPage);
+      --currentPage
       _onChangePage(currentPage);
     }
     if (totalPage % jump === 0) {
@@ -297,7 +305,7 @@ const Main: React.FC<Props> = React.memo(props => {
   };
   const _onNextPage = (): void => {
     if (currentPage !== totalPage) {
-      setCurrentPage(++currentPage);
+      ++currentPage
       _onChangePage(currentPage);
     }
     if (currentPage % jump === 1) countJump++;
@@ -307,9 +315,8 @@ const Main: React.FC<Props> = React.memo(props => {
     return pageSize && pageSize !== 0 ? (
       <ul className={styles.kPaginationListPage}>
         <li
-          className={`${styles.kPaginationPrev} ${
-            currentPage !== 1 ? "" : `${styles.kPrevDisabled}`
-          }`}
+          className={`${styles.kPaginationPrev} ${currentPage !== 1 ? "" : `${styles.kPrevDisabled}`
+            }`}
           onClick={_onPrevPage}
         >
           <i className={`${styles.kicon} ${styles.kiconLeft}`}>
@@ -328,9 +335,8 @@ const Main: React.FC<Props> = React.memo(props => {
         </li>
         {_showListPage(totalPage)}
         <li
-          className={`${styles.kPaginationNext} ${
-            currentPage !== totalPage ? "" : `${styles.kNextDisabled}`
-          }`}
+          className={`${styles.kPaginationNext} ${currentPage !== totalPage ? "" : `${styles.kNextDisabled}`
+            }`}
           onClick={_onNextPage}
         >
           <i className={`${styles.kicon} ${styles.kiconRight}`}>
@@ -349,8 +355,8 @@ const Main: React.FC<Props> = React.memo(props => {
         </li>
       </ul>
     ) : (
-      <div></div>
-    );
+        <div></div>
+      );
   };
   return (
     <div className={styles.kPagination}>
